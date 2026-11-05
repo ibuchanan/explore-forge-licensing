@@ -1,0 +1,53 @@
+modules:
+  webtrigger:
+    - key: license-filtered-trigger
+      function: licensed-trigger
+      urlFormat: v2
+      response:
+        type: dynamic
+    - key: license-json-rpc
+      function: json-rpc-trigger
+      urlFormat: v2
+      response:
+        type: dynamic
+  function:
+    - key: licensed-trigger
+      handler: index.licensedTrigger
+    - key: json-rpc-trigger
+      handler: index.jsonRpcTrigger
+    - key: license-resolver
+      handler: index.handler
+  jira:adminPage:
+    - key: license-admin-page
+      title: Explore Forge licensing
+      resource: license-ui
+      render: native
+      resolver:
+        function: license-resolver
+  jira:globalPage:
+    - key: license-global-page
+      title: Explore Forge licensing
+      resource: license-ui
+      render: native
+      resolver:
+        function: license-resolver
+  jira:issuePanel:
+    - key: license-issue-panel
+      title: Explore Forge licensing
+      icon: https://developer.atlassian.com/platform/forge/images/forge-logo.svg
+      resource: license-ui
+      render: native
+app:
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+  id: ari:cloud:ecosystem::app/8304de1b-495f-4f6a-9a7a-b224bedf0227
+  licensing:
+    enabled: true
+resources:
+  - key: license-ui
+    path: src/frontend.tsx
+permissions:
+  scopes:
+    - storage:app
