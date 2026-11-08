@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { invoke } from "@forge/bridge";
 import ForgeReconciler, {
-  Heading,
   Link,
   SectionMessage,
   Spinner,
@@ -8,7 +7,7 @@ import ForgeReconciler, {
   Text,
   useProductContext,
 } from "@forge/react";
-import { invoke } from "@forge/bridge";
+import React, { useEffect, useState } from "react";
 import type { LicenseStatus } from "./licensing";
 
 type Response = { license?: LicenseStatus; error?: string };
@@ -57,11 +56,9 @@ function App() {
   const license = isPanel ? panelStatus : data?.license;
   return (
     <Stack space="space.200">
-      {!isPanel && (
-        <Heading as="h1" size="large">
-          Explore Forge licensing
-        </Heading>
-      )}
+      <SectionMessage appearance="warning" title="Work in progress">
+        <Text>This UI is incomplete and may not work as expected yet.</Text>
+      </SectionMessage>
       {!context || (!isPanel && !data) ? (
         <Spinner label="Checking license" />
       ) : license ? (
